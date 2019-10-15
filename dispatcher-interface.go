@@ -9,5 +9,10 @@ type Source interface {
 
 type Destination interface {
 	// WriteData запись данных в назначение
-	WriteData(outChannel <- chan map[interface{}][]byte, confirmChannel chan <- interface{}) error
+	WriteData(outChannel <- chan map[interface{}][]byte, confirmChannel chan <- interface{}, crashChannel chan <- []byte) error
+}
+
+type Crash interface {
+	// SaveData сохранение записи при которой произошла ошибка
+	SaveData(crashChannel <- chan []byte)
 }
