@@ -22,7 +22,7 @@ type Destination interface {
 
 type Crash interface {
 	// SaveData сохранение записи при которой произошла ошибка
-	SaveData(crashChannel <- chan []byte)
+	SaveData(crashChannel <- chan []byte) error
 	// SetConfig инициализировать конфигурацию
 	SetConfig(f []byte) error
 	OpenConnection()error
