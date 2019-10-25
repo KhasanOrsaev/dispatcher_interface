@@ -2,9 +2,9 @@ package dispatcher_interface
 
 type Source interface {
 	// ReadData получение данных из источника
-	ReadData(inChannel chan <- map[interface{}][]byte) error
+	ReadData(inChannel chan <- map[interface{}][]byte, errChannel chan <- error)
 	// Confirm подтверждение о записи в назначение
-	Confirm(confirmChannel <- chan interface{}) error
+	Confirm(confirmChannel <- chan interface{}, errChannel chan <- error)
 	// SetConfig инициализировать конфигурацию
 	SetConfig(f []byte) error
 	OpenConnection()error
@@ -13,7 +13,7 @@ type Source interface {
 
 type Destination interface {
 	// WriteData запись данных в назначение
-	WriteData(outChannel <- chan map[interface{}][]byte, confirmChannel chan <- interface{}, crashChannel chan <- []byte) error
+	WriteData(outChannel <- chan map[interface{}][]byte, confirmChannel chan <- interface{}, crashChannel chan <- []byte, errChannel chan <- error)
 	// SetConfig инициализировать конфигурацию
 	SetConfig(f []byte) error
 	OpenConnection()error
@@ -22,7 +22,7 @@ type Destination interface {
 
 type Crash interface {
 	// SaveData сохранение записи при которой произошла ошибка
-	SaveData(crashChannel <- chan []byte) error
+	SaveData(crashChannel <- chan []byte, errChannel chan <- error)
 	// SetConfig инициализировать конфигурацию
 	SetConfig(f []byte) error
 	OpenConnection()error
